@@ -62,6 +62,10 @@ Three modes configured via `tunnel.mode`:
 
 Config schema is defined in `openclaw.plugin.json`.
 
+## Workflow
+
+The `main` branch is protected. All code changes must go through a pull request — never commit directly to main.
+
 ## Versioning and Releases
 
 Uses [changesets](https://github.com/changesets/changesets). PRs to main require a changeset file (enforced by CI). Merging a changeset to main triggers automated npm publish via GitHub Actions with OIDC provenance.
