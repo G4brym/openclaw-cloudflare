@@ -1,5 +1,11 @@
 # openclaw-cloudflare
 
+## 0.3.1
+
+### Patch Changes
+
+- [#8](https://github.com/G4brym/openclaw-cloudflare/pull/8) [`1b9a4dc`](https://github.com/G4brym/openclaw-cloudflare/commit/1b9a4dc6ce06357439ab5bffea7d951509482310) Thanks [@G4brym](https://github.com/G4brym)! - Fix plugin id to match npm package name (openclaw-cloudflare)
+
 ## 0.3.0
 
 ### Minor Changes
