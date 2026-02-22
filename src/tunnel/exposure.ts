@@ -30,6 +30,7 @@ export async function startGatewayCloudflareExposure(params: {
     const tunnel = await startCloudflaredTunnel({
       token: params.tunnelToken,
       timeoutMs: 30_000,
+      logger: params.logCloudflare,
     });
     params.logCloudflare.info(
       `managed tunnel running (connectorId=${tunnel.connectorId ?? "unknown"}, pid=${tunnel.pid ?? "unknown"})`,

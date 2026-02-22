@@ -42,8 +42,9 @@ Cloudflare integration is disabled.
 OpenClaw spawns and manages a `cloudflared` tunnel process automatically.
 
 **Requirements:**
-- `cloudflared` binary installed and in PATH (or at a known location)
 - A pre-configured tunnel token from the Cloudflare Zero Trust dashboard
+
+> **Auto-install:** If `cloudflared` is not found in PATH or known locations, the plugin automatically downloads the latest release from GitHub to `~/.openclaw/bin/cloudflared`. No manual installation required.
 
 **Setup:**
 

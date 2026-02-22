@@ -1,5 +1,11 @@
 import { execFile, spawn, type ChildProcess } from "node:child_process";
 import { existsSync } from "node:fs";
+import { chmod, mkdir, unlink, writeFile } from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+import { promisify } from "node:util";
+
+const execFilePromise = promisify(execFile);
 
 type ExecResult = { stdout: string; stderr: string };
 type ExecFn = (cmd: string, args: string[], opts?: { timeoutMs?: number }) => Promise<ExecResult>;
@@ -56,6 +62,7 @@ export async function findCloudflaredBinary(
 
   // Strategy 2: Known install paths
   const knownPaths = [
+    path.join(os.homedir(), ".openclaw", "bin", "cloudflared"),
     "/usr/local/bin/cloudflared",
     "/usr/bin/cloudflared",
     "/opt/homebrew/bin/cloudflared",
@@ -67,6 +74,59 @@ export async function findCloudflaredBinary(
   }
 
   return null;
+}
+
+/**
+ * Download and install the cloudflared binary from GitHub releases to ~/.openclaw/bin/.
+ */
+export async function installCloudflared(logger?: {
+  info: (msg: string) => void;
+}): Promise<string> {
+  const platform = process.platform;
+  const arch = process.arch;
+
+  const archMap: Record<string, string> = {
+    x64: "amd64",
+    arm64: "arm64",
+    arm: "arm",
+    ia32: "386",
+  };
+  const cfArch = archMap[arch];
+  if (!cfArch) throw new Error(`Unsupported architecture: ${arch}`);
+
+  let filename: string;
+  if (platform === "linux") {
+    filename = `cloudflared-linux-${cfArch}`;
+  } else if (platform === "darwin") {
+    filename = `cloudflared-darwin-${cfArch}.tgz`;
+  } else {
+    throw new Error(`Unsupported platform for auto-install: ${platform}`);
+  }
+
+  const url = `https://github.com/cloudflare/cloudflared/releases/latest/download/${filename}`;
+
+  const installDir = path.join(os.homedir(), ".openclaw", "bin");
+  await mkdir(installDir, { recursive: true });
+  const installPath = path.join(installDir, "cloudflared");
+
+  logger?.info(`cloudflared not found, downloading from ${url}...`);
+
+  const res = await fetch(url, { redirect: "follow" });
+  if (!res.ok) throw new Error(`Failed to download cloudflared: HTTP ${res.status}`);
+  const data = new Uint8Array(await res.arrayBuffer());
+
+  if (platform === "darwin") {
+    const tgzPath = installPath + ".tgz";
+    await writeFile(tgzPath, data);
+    await execFilePromise("tar", ["-xzf", tgzPath, "-C", installDir]);
+    await unlink(tgzPath);
+  } else {
+    await writeFile(installPath, data);
+  }
+
+  await chmod(installPath, 0o755);
+  logger?.info(`cloudflared installed to ${installPath}`);
+  return installPath;
 }
 
 let cachedCloudflaredBinary: string | null = null;
@@ -102,9 +162,13 @@ export async function startCloudflaredTunnel(opts: {
   token: string;
   timeoutMs?: number;
   exec?: ExecFn;
+  logger?: { info: (msg: string) => void };
 }): Promise<CloudflaredTunnel> {
   const exec = opts.exec ?? defaultExec;
-  const bin = await getCloudflaredBinary(exec);
+  let bin = await findCloudflaredBinary(exec);
+  if (!bin) {
+    bin = await installCloudflared(opts.logger);
+  }
   const timeoutMs = opts.timeoutMs ?? 30_000;
   const stderr: string[] = [];
 
