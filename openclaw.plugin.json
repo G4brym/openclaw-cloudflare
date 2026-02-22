@@ -4,34 +4,17 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
-      "tunnel": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "mode": {
-            "type": "string",
-            "enum": ["off", "managed", "access-only"],
-            "default": "off"
-          },
-          "tunnelToken": { "type": "string" },
-          "teamDomain": { "type": "string" },
-          "audience": { "type": "string" }
-        }
-      }
+      "teamDomain": { "type": "string" },
+      "audience": { "type": "string" }
     }
   },
   "uiHints": {
-    "tunnel.tunnelToken": {
-      "label": "Tunnel Token",
-      "sensitive": true,
-      "help": "Token from Cloudflare Zero Trust dashboard (managed mode)"
-    },
-    "tunnel.teamDomain": {
+    "teamDomain": {
       "label": "Team Domain",
       "placeholder": "myteam",
       "help": "Team domain for myteam.cloudflareaccess.com"
     },
-    "tunnel.audience": {
+    "audience": {
       "label": "Application Audience (AUD)",
       "help": "Optional AUD tag for stricter JWT validation",
       "advanced": true

@@ -1,5 +1,5 @@
 ---
-"openclaw-cloudflare": patch
+"openclaw-cloudflare": minor
 ---
 
-Exclude test files from npm package and expand README with full setup guide
+Remove managed mode — plugin now focuses solely on Cloudflare Access JWT verification. Assumes cloudflared is managed externally. Config is now flat (teamDomain, audience) with no tunnel wrapper or mode field.
