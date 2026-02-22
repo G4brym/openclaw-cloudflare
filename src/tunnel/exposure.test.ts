@@ -86,6 +86,7 @@ describe("startGatewayCloudflareExposure", () => {
     expect(startCloudflaredTunnelMock).toHaveBeenCalledWith({
       token: "test-token",
       timeoutMs: 30_000,
+      logger: log,
     });
     expect(log.info).toHaveBeenCalledWith(
       expect.stringContaining("connectorId=abc-123"),
