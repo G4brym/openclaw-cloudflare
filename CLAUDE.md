@@ -53,8 +53,10 @@ Plugin activates when `teamDomain` is set in config (flat structure, no nesting)
     "entries": {
       "cloudflare": {
         "config": {
-          "teamDomain": "myteam",
-          "audience": "optional-aud-tag"
+          "access": {
+            "teamDomain": "myteam",
+            "audience": "optional-aud-tag"
+          }
         }
       }
     }

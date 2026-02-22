@@ -4,17 +4,23 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
-      "teamDomain": { "type": "string" },
-      "audience": { "type": "string" }
+      "access": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "teamDomain": { "type": "string" },
+          "audience": { "type": "string" }
+        }
+      }
     }
   },
   "uiHints": {
-    "teamDomain": {
+    "access.teamDomain": {
       "label": "Team Domain",
       "placeholder": "myteam",
       "help": "Team domain for myteam.cloudflareaccess.com"
     },
-    "audience": {
+    "access.audience": {
       "label": "Application Audience (AUD)",
       "help": "Optional AUD tag for stricter JWT validation",
       "advanced": true

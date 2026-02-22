@@ -30,7 +30,9 @@ Add to your `~/.openclaw/openclaw.json`:
     "entries": {
       "cloudflare": {
         "config": {
-          "teamDomain": "myteam"
+          "access": {
+            "teamDomain": "myteam"
+          }
         }
       }
     }
@@ -68,6 +70,6 @@ Supported algorithms: RS256, ES256 (via Node.js WebCrypto, no external deps). JW
 
 | Key | Type | Description |
 |-----|------|-------------|
-| `teamDomain` | `string` | Team domain for `<team>.cloudflareaccess.com` (required) |
-| `audience` | `string` | Optional AUD tag for stricter JWT validation |
+| `access.teamDomain` | `string` | Team domain for `<team>.cloudflareaccess.com` (required to enable) |
+| `access.audience` | `string` | Optional AUD tag for stricter JWT validation |
 

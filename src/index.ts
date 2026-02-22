@@ -2,8 +2,10 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { createCloudflareAccessVerifier } from "./tunnel/access.js";
 
 type PluginConfig = {
-  teamDomain?: string;
-  audience?: string;
+  access?: {
+    teamDomain?: string;
+    audience?: string;
+  };
 };
 
 export default {
@@ -15,7 +17,7 @@ export default {
     logger: { info: (msg: string) => void; warn: (msg: string) => void; error: (msg: string) => void };
     registerHttpHandler(handler: (req: IncomingMessage, res: ServerResponse) => Promise<boolean> | boolean): void;
   }) {
-    const config = api.pluginConfig;
+    const config = api.pluginConfig?.access;
     const teamDomain = config?.teamDomain;
 
     if (!teamDomain) {
@@ -25,7 +27,7 @@ export default {
 
     const verifier = createCloudflareAccessVerifier({
       teamDomain,
-      audience: config?.audience,
+      audience: config.audience,
     });
 
     api.logger.info(`[cloudflare] Access JWT verifier active for ${teamDomain}.cloudflareaccess.com`);

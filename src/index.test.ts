@@ -58,7 +58,7 @@ describe("cloudflare plugin", () => {
     createCloudflareAccessVerifierMock.mockReturnValue(mockVerifier);
 
     const { default: plugin } = await import("./index.js");
-    const api = createMockApi({ teamDomain: "myteam", audience: "my-aud" });
+    const api = createMockApi({ access: { teamDomain: "myteam", audience: "my-aud" } });
 
     plugin.register(api);
 
@@ -71,7 +71,7 @@ describe("cloudflare plugin", () => {
   });
 
   describe("HTTP handler", () => {
-    async function setupHandler(config: Record<string, unknown> = { teamDomain: "myteam" }) {
+    async function setupHandler(config: Record<string, unknown> = { access: { teamDomain: "myteam" } }) {
       const mockVerifier = { verify: vi.fn().mockResolvedValue(null) };
       createCloudflareAccessVerifierMock.mockReturnValue(mockVerifier);
 
