@@ -44,6 +44,11 @@
     "type": "git",
     "url": "git+https://github.com/G4brym/openclaw-cloudflare.git"
   },
+  "files": [
+    "src",
+    "!src/**/*.test.ts",
+    "openclaw.plugin.json"
+  ],
   "publishConfig": {
     "provenance": true,
     "access": "public"
