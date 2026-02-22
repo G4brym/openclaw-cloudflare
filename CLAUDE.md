@@ -65,3 +65,13 @@ Config schema is defined in `openclaw.plugin.json`.
 ## Versioning and Releases
 
 Uses [changesets](https://github.com/changesets/changesets). PRs to main require a changeset file (enforced by CI). Merging a changeset to main triggers automated npm publish via GitHub Actions with OIDC provenance.
+
+**Every PR to main must include a changeset.** Add one with `npx changeset` or manually create a file in `.changeset/` with this format:
+
+```md
+---
+"openclaw-cloudflare": patch  # or minor/major
+---
+
+Description of the change
+```
