@@ -28,7 +28,7 @@ Add to your `~/.openclaw/openclaw.json`:
 {
   "plugins": {
     "entries": {
-      "cloudflare": {
+      "openclaw-cloudflare": {
         "config": {
           "access": {
             "teamDomain": "myteam"
@@ -40,7 +40,6 @@ Add to your `~/.openclaw/openclaw.json`:
 }
 ```
 
-> **Note:** The config key must be `cloudflare` (the plugin ID), not `openclaw-cloudflare` (the npm package name).
 
 ### Step 4 — Start OpenClaw
 

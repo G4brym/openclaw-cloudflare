@@ -51,7 +51,7 @@ Plugin activates when `teamDomain` is set in config (flat structure, no nesting)
 {
   "plugins": {
     "entries": {
-      "cloudflare": {
+      "openclaw-cloudflare": {
         "config": {
           "access": {
             "teamDomain": "myteam",
