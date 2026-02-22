@@ -52,6 +52,69 @@ The plugin will verify Cloudflare Access JWTs on every incoming request and set 
 
 ---
 
+## Running cloudflared on your VM
+
+This plugin only handles JWT verification — you need `cloudflared` running on the VM to route traffic through Cloudflare. Here's how to set it up as a persistent system service so it starts automatically.
+
+### 1 — Create a tunnel in the Cloudflare dashboard
+
+1. Go to [Cloudflare Zero Trust](https://one.dash.cloudflare.com/) → **Networks > Tunnels** → **Create a tunnel**
+2. Choose **Cloudflared**, name it (e.g. `my-openclaw`), click **Save tunnel**
+3. Under **Public Hostnames**, add a hostname pointing to your OpenClaw gateway:
+   - Subdomain + domain: e.g. `openclaw.example.com`
+   - Service: `HTTP` → `localhost:18789` (OpenClaw's default port)
+4. Copy the **tunnel token** shown on the connector install page
+
+### 2 — Install cloudflared
+
+**Debian/Ubuntu:**
+```bash
+curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb -o cloudflared.deb
+sudo dpkg -i cloudflared.deb
+```
+
+**RHEL/Fedora:**
+```bash
+curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm -o cloudflared.rpm
+sudo rpm -i cloudflared.rpm
+```
+
+**ARM64:**
+```bash
+curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64 -o cloudflared
+sudo install -m 755 cloudflared /usr/local/bin/cloudflared
+```
+
+**macOS:**
+```bash
+brew install cloudflare/cloudflare/cloudflared
+```
+
+### 3 — Install as a system service
+
+**Linux:**
+```bash
+sudo cloudflared service install <your-tunnel-token>
+sudo systemctl enable cloudflared
+sudo systemctl start cloudflared
+```
+
+Verify it's running:
+```bash
+sudo systemctl status cloudflared
+```
+
+**macOS:**
+```bash
+sudo cloudflared service install <your-tunnel-token>
+```
+
+This registers a launchd plist that starts cloudflared automatically on boot.
+
+Once the tunnel is active, all traffic arriving at your public hostname passes through Cloudflare Access — and this plugin verifies the resulting JWTs on each request.
+
+---
+
 ## How it works
 
 When a request arrives with a `Cf-Access-Jwt-Assertion` header, the plugin:
