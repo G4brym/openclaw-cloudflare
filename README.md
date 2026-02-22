@@ -115,6 +115,34 @@ Once the tunnel is active, all traffic arriving at your public hostname passes t
 
 ---
 
+## OpenClaw gateway configuration
+
+With `cloudflared` running on the same machine, the gateway only needs to be reachable on loopback. Configure `~/.openclaw/openclaw.json` to bind locally, trust the local proxy, and delegate authentication to the identity headers this plugin sets:
+
+```json
+{
+  "gateway": {
+    "bind": "loopback",
+    "trustedProxies": ["127.0.0.1"],
+    "auth": {
+      "mode": "trusted-proxy",
+      "trustedProxy": {
+        "userHeader": "x-openclaw-user-email"
+      }
+    }
+  }
+}
+```
+
+| Field | Value | Why |
+|-------|-------|-----|
+| `gateway.bind` | `"loopback"` | cloudflared connects to OpenClaw locally — no need to expose to LAN |
+| `gateway.trustedProxies` | `["127.0.0.1"]` | Only trust identity headers from cloudflared running on the same host |
+| `gateway.auth.mode` | `"trusted-proxy"` | Delegate authentication to this plugin instead of using a password/token |
+| `gateway.auth.trustedProxy.userHeader` | `"x-openclaw-user-email"` | This plugin sets this header after verifying the Cloudflare Access JWT |
+
+---
+
 ## How it works
 
 When a request arrives with a `Cf-Access-Jwt-Assertion` header, the plugin:
