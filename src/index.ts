@@ -9,7 +9,7 @@ type PluginConfig = {
 };
 
 export default {
-  id: "cloudflare",
+  id: "openclaw-cloudflare",
   name: "Cloudflare",
 
   register(api: {
