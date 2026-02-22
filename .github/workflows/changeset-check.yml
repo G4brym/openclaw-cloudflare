@@ -1,0 +1,25 @@
+name: Changeset Check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    name: Check for changeset
+    runs-on: ubuntu-latest
+    # Skip on the "Version Packages" PR itself — it has no changeset by design
+    if: github.head_ref != 'changeset-release/main'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npx changeset status --since=origin/main
