@@ -23,6 +23,21 @@
     "typescript": "^5.7.0",
     "vitest": "^3.0.0"
   },
+  "openclaw": {
+    "extensions": ["./src/index.ts"],
+    "install": {
+      "npmSpec": "openclaw-cloudflare",
+      "defaultChoice": "npm"
+    }
+  },
+  "keywords": [
+    "openclaw",
+    "openclaw-plugin",
+    "cloudflare",
+    "cloudflare-tunnel",
+    "cloudflare-access",
+    "zero-trust"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/G4brym/openclaw-plugin-cloudflare.git"
