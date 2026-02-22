@@ -42,14 +42,6 @@ describe("findCloudflaredBinary", () => {
   beforeEach(() => {
     vi.resetModules();
     vi.restoreAllMocks();
-    delete process.env.OPENCLAW_TEST_CLOUDFLARED_BINARY;
-  });
-
-  it("returns environment override when set", async () => {
-    process.env.OPENCLAW_TEST_CLOUDFLARED_BINARY = "/custom/cloudflared";
-    const { findCloudflaredBinary } = await import("./cloudflared.js");
-    const result = await findCloudflaredBinary(execMock);
-    expect(result).toBe("/custom/cloudflared");
   });
 
   it("finds cloudflared via which", async () => {
@@ -224,7 +216,6 @@ describe("startCloudflaredTunnel", () => {
   beforeEach(() => {
     vi.resetModules();
     vi.restoreAllMocks();
-    delete process.env.OPENCLAW_TEST_CLOUDFLARED_BINARY;
   });
 
   function createMockProcess(): ChildProcess & {
@@ -284,13 +275,13 @@ describe("startCloudflaredTunnel", () => {
     const mockChild = createMockProcess();
 
     spawnMock.mockReturnValue(mockChild);
-    process.env.OPENCLAW_TEST_CLOUDFLARED_BINARY = "/usr/local/bin/cloudflared";
 
     const { startCloudflaredTunnel } = await import("./cloudflared.js");
 
     const tunnelPromise = startCloudflaredTunnel({
       token: "test-token",
       timeoutMs: 5000,
+      bin: "/usr/local/bin/cloudflared",
     });
 
     // Simulate cloudflared registering a connection
@@ -307,13 +298,13 @@ describe("startCloudflaredTunnel", () => {
     const mockChild = createMockProcess();
 
     spawnMock.mockReturnValue(mockChild);
-    process.env.OPENCLAW_TEST_CLOUDFLARED_BINARY = "/usr/local/bin/cloudflared";
 
     const { startCloudflaredTunnel } = await import("./cloudflared.js");
 
     const tunnelPromise = startCloudflaredTunnel({
       token: "bad-token",
       timeoutMs: 5000,
+      bin: "/usr/local/bin/cloudflared",
     });
 
     await new Promise((r) => setTimeout(r, 50));

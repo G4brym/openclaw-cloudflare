@@ -152,4 +152,3 @@ Supported algorithms: RS256, ES256 (via Node.js WebCrypto, no external deps). JW
 | Variable | Description |
 |----------|-------------|
 | `OPENCLAW_CLOUDFLARE_TUNNEL_TOKEN` | Tunnel token (alternative to config file) |
-| `OPENCLAW_TEST_CLOUDFLARED_BINARY` | Override cloudflared binary path (testing only) |

@@ -25,18 +25,12 @@ function defaultExec(cmd: string, args: string[], opts?: { timeoutMs?: number })
 
 /**
  * Locate the cloudflared binary using multiple strategies:
- * 1. Environment override (for testing)
- * 2. PATH lookup (via `which`)
- * 3. Known install paths
+ * 1. PATH lookup (via `which`)
+ * 2. Known install paths
  */
 export async function findCloudflaredBinary(
   exec: ExecFn = defaultExec,
 ): Promise<string | null> {
-  const forced = process.env.OPENCLAW_TEST_CLOUDFLARED_BINARY?.trim();
-  if (forced) {
-    return forced;
-  }
-
   const checkBinary = async (path: string): Promise<boolean> => {
     if (!path || !existsSync(path)) {
       return false;
@@ -132,11 +126,6 @@ export async function installCloudflared(logger?: {
 let cachedCloudflaredBinary: string | null = null;
 
 export async function getCloudflaredBinary(exec: ExecFn = defaultExec): Promise<string> {
-  const forced = process.env.OPENCLAW_TEST_CLOUDFLARED_BINARY?.trim();
-  if (forced) {
-    cachedCloudflaredBinary = forced;
-    return forced;
-  }
   if (cachedCloudflaredBinary) {
     return cachedCloudflaredBinary;
   }
@@ -162,10 +151,11 @@ export async function startCloudflaredTunnel(opts: {
   token: string;
   timeoutMs?: number;
   exec?: ExecFn;
+  bin?: string;
   logger?: { info: (msg: string) => void };
 }): Promise<CloudflaredTunnel> {
   const exec = opts.exec ?? defaultExec;
-  let bin = await findCloudflaredBinary(exec);
+  let bin = opts.bin ?? await findCloudflaredBinary(exec);
   if (!bin) {
     bin = await installCloudflared(opts.logger);
   }
