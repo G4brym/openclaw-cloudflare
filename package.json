@@ -1,6 +1,6 @@
 {
   "name": "openclaw-cloudflare",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Cloudflare integration plugin for OpenClaw (Tunnel, Access, and more)",
   "type": "module",
   "exports": {
@@ -24,7 +24,9 @@
     "vitest": "^3.0.0"
   },
   "openclaw": {
-    "extensions": ["./src/index.ts"],
+    "extensions": [
+      "./src/index.ts"
+    ],
     "install": {
       "npmSpec": "openclaw-cloudflare",
       "defaultChoice": "npm"
