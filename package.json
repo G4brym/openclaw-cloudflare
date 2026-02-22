@@ -23,5 +23,13 @@
     "typescript": "^5.7.0",
     "vitest": "^3.0.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/G4brym/openclaw-plugin-cloudflare.git"
+  },
+  "publishConfig": {
+    "provenance": true,
+    "access": "public"
+  },
   "license": "MIT"
 }
