@@ -1,5 +1,11 @@
 # openclaw-cloudflare
 
+## 0.3.0
+
+### Minor Changes
+
+- [#6](https://github.com/G4brym/openclaw-cloudflare/pull/6) [`6434c37`](https://github.com/G4brym/openclaw-cloudflare/commit/6434c37563f83120d806f054cd3fd7ed02b75e6b) Thanks [@G4brym](https://github.com/G4brym)! - Remove managed mode — plugin now focuses solely on Cloudflare Access JWT verification. Assumes cloudflared is managed externally. Config is now flat (teamDomain, audience) with no tunnel wrapper or mode field.
+
 ## 0.2.1
 
 ### Patch Changes
