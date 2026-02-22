@@ -40,7 +40,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/G4brym/openclaw-plugin-cloudflare.git"
+    "url": "git+https://github.com/G4brym/openclaw-cloudflare.git"
   },
   "publishConfig": {
     "provenance": true,
