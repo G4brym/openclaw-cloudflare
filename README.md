@@ -34,7 +34,7 @@ Skip this step if you only want the tunnel without user authentication.
 
 ### Step 4 — Configure the plugin
 
-Add to your `openclaw.json`, using `cloudflare` as the plugin key:
+Add to your `~/.openclaw/openclaw.json`, using `cloudflare` as the plugin key:
 
 ```json
 {
@@ -65,7 +65,7 @@ export OPENCLAW_CLOUDFLARE_TUNNEL_TOKEN="eyJhIjoiYWNj..."
 ### Step 5 — Start OpenClaw
 
 ```bash
-openclaw start
+openclaw gateway --force
 ```
 
 The plugin will:
