@@ -1,6 +1,6 @@
 {
   "name": "openclaw-cloudflare",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Cloudflare integration plugin for OpenClaw (Tunnel, Access, and more)",
   "type": "module",
   "exports": {
