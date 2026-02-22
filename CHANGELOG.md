@@ -1,5 +1,11 @@
 # openclaw-cloudflare
 
+## 0.2.1
+
+### Patch Changes
+
+- [#4](https://github.com/G4brym/openclaw-cloudflare/pull/4) [`a363c11`](https://github.com/G4brym/openclaw-cloudflare/commit/a363c119aa808284762306a529e0572496735684) Thanks [@G4brym](https://github.com/G4brym)! - Add MIT LICENSE file
+
 ## 0.2.0
 
 ### Minor Changes
